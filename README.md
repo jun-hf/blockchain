@@ -1,2 +1,2 @@
-# blockchain
+# Blockchain
 Blockchain in go
