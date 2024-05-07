@@ -34,7 +34,7 @@ func (t *LocalTransport) Connect(tr *LocalTransport) error {
 
 func (t *LocalTransport) SendMessage(to NetAddr, payload []byte) error {
 	t.mu.RLock()
-	defer t.mu.Unlock()
+	defer t.mu.RUnlock()
 	peer, ok := t.peers[to]
 	if !ok {
 		return fmt.Errorf("%v does not exist in peer", to)
