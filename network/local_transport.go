@@ -24,11 +24,14 @@ func (t *LocalTransport) Consume() <-chan RPC {
 	return t.consumeCh
 }
 
-func (t *LocalTransport) Connect(tr *LocalTransport) error {
+func (t *LocalTransport) Connect(tr Transport) error {
 	t.mu.Lock()
 	defer t.mu.Unlock()
-
-	t.peers[tr.Addr()] = tr
+	lt, ok := tr.(*LocalTransport)
+	if !ok {
+		return fmt.Errorf("please *LocalTransport not %+v", tr)
+	}
+	t.peers[tr.Addr()] = lt
 	return nil
 }
 
